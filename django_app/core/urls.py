@@ -25,9 +25,13 @@ urlpatterns = [
     path("api/ping/", ping_view),
     # admin
     path("admin/", admin.site.urls),
-    # docs
-    path("api/docs/schema/", SpectacularAPIView.as_view(), name="schema"),
-    path("api/docs/swagger/", SpectacularSwaggerView.as_view(), name="swagger-ui"),
     # apps
     path("api/polls/", include("polls.urls")),
 ]
+
+if True:
+    urlpatterns += [
+        # docs
+        path("api/docs/schema/", SpectacularAPIView.as_view(), name="schema"),
+        path("api/docs/swagger/", SpectacularSwaggerView.as_view(), name="swagger-ui"),
+    ]

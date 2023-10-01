@@ -7,11 +7,17 @@ from .models import Choice, Question
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
+        fields = ("id", "question", "choice_text", "votes")
+
+
+class ChoiceInsideQuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Choice
         fields = ("id", "choice_text", "votes")
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    choices = ChoiceSerializer(many=True, read_only=True)
+    choices = ChoiceInsideQuestionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question

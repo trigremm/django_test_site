@@ -37,10 +37,15 @@ up:
 stop:
 	docker compose stop
 
+stop_django:
+	docker compose stop django_main
+
 down:
 	docker compose down --remove-orphans
 
-restart: stop up
+restart: stop_django up
+
+r: restart
 
 recreate: pull build stop up ps
 
@@ -65,6 +70,8 @@ format: add_file_path_comment
 	# code formatting
 	@python -m black django_app/ --line-length 120 --quiet
 
+f: format
+
 add_file_path_comment:
 	@python utils.d/add_file_path_comment.py
 	@echo "file path comment added"
@@ -76,8 +83,8 @@ prompt:
 .PHONY: all config ps logs logs_forever prune
 .PHONY: pull pull-images
 .PHONY: build rebuild cached-build
-.PHONY: up run stop down restart
+.PHONY: up run stop down restart r
 .PHONY: recreate recreate-backend rb
 .PHONY: shell runshell ishell irunshell
-.PHONY: format
+.PHONY: format f
 .PHONY: add_file_path_comment prompt

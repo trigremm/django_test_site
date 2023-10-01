@@ -1,0 +1,15 @@
+# create main dir
+mkdir django_test_site
+cd django_test_site
+django-admin startproject core 
+mv core django_app
+touch .gitignore 
+
+# tune settings 
+touch django_app/Dockerfile
+mkdir -p django_app/bin 
+
+# 
+touch docker-compose.yaml
+touch django_app/bin/entrypoint.sh
+touch Makefile

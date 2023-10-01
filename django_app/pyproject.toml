@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = ["Molkenov Askhat <askhat.molkenov@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.2.5"
+celery = "^5.3.4"
+redis = "^5.0.1"
+gunicorn = "^21.2.0"
+uvicorn = "^0.23.2"
+django-celery-beat = "^2.5.0"
+django-celery-results = "^2.5.1"
+django-redis = "^5.3.0"
+djangorestframework = "^3.14.0"
+loguru = "^0.7.2"
+drf-spectacular = "^0.26.5"
+drf-spectacular-sidecar = "^2023.9.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

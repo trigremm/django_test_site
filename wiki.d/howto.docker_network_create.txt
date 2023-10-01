@@ -1,0 +1,2 @@
+docker network ls 
+docker network inspect $( docker network ls | grep 'django_test_site_test_site_network' | awk '{print $1}' )

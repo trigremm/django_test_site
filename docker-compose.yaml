@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx_data/nginx.conf:/etc/nginx/conf.d/django_test_site.conf
+    ports:
+      - "80:80"
+    networks:
+      test_site_network:
+        ipv4_address: 172.32.0.10
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    platform: linux/amd64
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - test_site_network
+
+  django_main:
+    image: backend:latest
+    build:
+      context: ./django_app
+      dockerfile: Dockerfile
+    container_name: django_main
+    env_file:
+      - .env
+    platform: linux/amd64
+    pull_policy: build
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - ./django_app/:/app/
+    networks:
+      - test_site_network
+
+  # django_celery_worker:
+  #   image: backend:latest
+  #   platform: linux/amd64
+  #   pull_policy: build
+  #   command: celery -A core worker --loglevel=info --concurrency=2
+  #   container_name: django_celery_worker
+  #   env_file:
+  #     - .env
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./django_app/:/app/
+  #   networks:
+  #     - test_site_network
+
+networks:
+  test_site_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.32.0.0/16

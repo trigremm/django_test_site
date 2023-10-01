@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx:latest
     volumes:
-      - ./nginx_data/nginx.conf:/etc/nginx/conf.d/django_test_site.conf
+      - ./nginx_app/nginx.conf:/etc/nginx/conf.d/django_test_site.conf
     ports:
       - "80:80"
     networks:

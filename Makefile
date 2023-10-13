@@ -1,23 +1,24 @@
+MAIN_BACKEND_SERVICE=django_main
+MAIN_BACKEND_PATH=django_app
+
+# default
 all: ps
 
 # general
-config:
-	docker compose config
-
 ps:
 	docker compose ps
 
 logs:
-	docker compose logs -f --tail 100
-
-logs_forever:
-	while True; do \
+	@while True; do \
 		docker compose logs -f --tail 100; \
 		sleep 10; \
 	done
 
 prune:
 	docker system prune -f -a
+
+config:
+	docker compose config
 
 # build
 pull:
@@ -37,27 +38,27 @@ up:
 stop:
 	docker compose stop
 
-stop_django:
-	docker compose stop django_main
+stop-backend:
+	docker compose stop ${MAIN_BACKEND_SERVICE}
 
 down:
 	docker compose down --remove-orphans
 
-restart: stop_django up
-
-r: restart
+restart: stop-backend up
 
 recreate: pull build stop up ps
 
+r: recreate
+
 # shell
 shell:
-	docker compose exec django_main bash
+	docker compose exec ${MAIN_BACKEND_SERVICE} bash
 
 runshell:
-	docker compose run django_main bash
+	docker compose run ${MAIN_BACKEND_SERVICE} bash
 
 ishell:
-	docker compose exec django_main sh -c 'pip install ipython && python manage.py shell'
+	docker compose exec ${MAIN_BACKEND_SERVICE} sh -c 'pip install ipython && python manage.py shell'
 
 # format
 format: add_file_path_comment
@@ -65,10 +66,10 @@ format: add_file_path_comment
 	# pre-commit install
 
 	# imports sorting
-	@python -m isort django_app/ --line-width 120 --quiet
+	@python -m isort ${MAIN_BACKEND_PATH}/ --line-width 120 --quiet
 	
 	# code formatting
-	@python -m black django_app/ --line-length 120 --quiet
+	@python -m black ${MAIN_BACKEND_PATH}/ --line-length 120 --quiet
 
 f: format
 
@@ -77,7 +78,7 @@ add_file_path_comment:
 	@echo "file path comment added"
 
 prompt:
-	@bash utils.d/generate_prompt.sh -i migrations -p ./django_app
+	@bash utils.d/generate_prompt.sh -i migrations -p ./${MAIN_BACKEND_PATH}
 	@echo "prompt generated"
 
 .PHONY: all config ps logs logs_forever prune

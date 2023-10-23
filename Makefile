@@ -29,7 +29,7 @@ pull-images:
 
 build:
 	# docker compose build --no-cache --pull
-	docker compose build 
+	docker compose build
 
 # run
 up:
@@ -61,15 +61,20 @@ ishell:
 	docker compose exec ${MAIN_BACKEND_SERVICE} sh -c 'pip install ipython && python manage.py shell'
 
 # format
+clean:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '__pycache__' -exec rm -fr {} +
+
 format: add_file_path_comment
 	# pip install isort black pylint bandit mypy flake8 pytest coverage safety pre-commit types-requests pydocstyle radon
 	# pre-commit install
 
 	# imports sorting
-	@python -m isort ${MAIN_BACKEND_PATH}/ --line-width 120 --quiet
-	
+	python -m isort . --line-width 120 --quiet
+
 	# code formatting
-	@python -m black ${MAIN_BACKEND_PATH}/ --line-length 120 --quiet
+	python -m black . --line-length 120 --quiet
 
 f: format
 
@@ -87,5 +92,5 @@ prompt:
 .PHONY: up run stop down restart r
 .PHONY: recreate recreate-backend rb
 .PHONY: shell runshell ishell irunshell
-.PHONY: format f
+.PHONY: clean format f
 .PHONY: add_file_path_comment prompt

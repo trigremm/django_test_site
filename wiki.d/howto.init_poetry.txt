@@ -2,10 +2,10 @@
 cd django_app
 
 # from django_app
-docker run -it --rm -w /app -v $(pwd)/django_app:/app python:3.11.3-slim-bullseye /bin/bash
+docker run -it --rm -w /app -v $(pwd)/django_app:/app python:3.11.6-slim-bullseye /bin/bash
 
 # from container shell
-pip install poetry 
-poetry init 
+pip install poetry
+poetry init
 poetry install
 exit

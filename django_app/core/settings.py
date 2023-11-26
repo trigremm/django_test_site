@@ -130,6 +130,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Use HTTPS in your links if your Django is behind a proxy
+USE_X_FORWARDED_HOST = True
+
 # media files
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

@@ -161,6 +161,7 @@ cython_debug/
 
 */*.sqlite3
 
+.idea/
 django_app/static/
 django_app/media/
 

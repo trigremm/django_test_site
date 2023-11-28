@@ -1,10 +1,10 @@
 # from project root
-APP_ROOT='django_app'
+BACKEND_ROOT='django_app'
 
-cd ${APP_ROOT:-django_app}
+cd ${BACKEND_ROOT:-django_app}
 
 # from django_app
-docker run -it --rm -w /app -v $(pwd)/${APP_ROOT:-django_app}:/app python:3.11.6-slim-bullseye /bin/bash
+docker run -it --rm -w /app -v $(pwd)/${BACKEND_ROOT:-django_app}:/app python:3.11.6-slim-bullseye /bin/bash
 
 # from container shell
 pip install poetry==1.6.1

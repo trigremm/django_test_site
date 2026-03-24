@@ -1,26 +1,65 @@
-# EditorConfig is awesome: http://EditorConfig.org
+# EditorConfig: http://EditorConfig.org
 
-# top-most EditorConfig file
 root = true
 
-# Unix-style newlines with a newline ending every file
 [*]
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 charset = utf-8
 
-# 4 space indentation
-[*.{py,java,r,R}]
+###########################
+# Python
+###########################
+[*.py]
 indent_style = space
 indent_size = 4
 
-# 2 space indentation
-[*.{js,json,y{a,}ml,html,cwl}]
+###########################
+# JSON, JS, YAML, HTML, CSS
+###########################
+[*.{js,json,yml,yaml,html,css}]
 indent_style = space
 indent_size = 2
 
-[*.{md,Rmd,rst}]
+###########################
+# Markdown
+###########################
+[*.md]
 trim_trailing_whitespace = false
 indent_style = space
 indent_size = 2
+
+###########################
+# Makefiles
+###########################
+[{Makefile,*.mk}]
+indent_style = tab
+
+###########################
+# Shell scripts
+###########################
+[*.sh]
+indent_style = space
+indent_size = 2
+
+###########################
+# TOML files
+###########################
+[*.toml]
+indent_style = space
+indent_size = 2
+
+###########################
+# EditorConfig itself
+###########################
+[.editorconfig]
+indent_style = space
+indent_size = 2
+
+###########################
+# Ignore binary assets
+###########################
+[*.{png,jpg,jpeg,svg,ttf,woff,woff2,eot,ico}]
+insert_final_newline = false
+trim_trailing_whitespace = false

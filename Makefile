@@ -66,7 +66,12 @@ clean:
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
 
-format: add_file_path_comment
+# `make format` needs black + isort for the interpreter behind `python`; fail early with a hint
+# instead of running add_file_path_comment and then dying half-way through.
+check-format-tools:
+	@python -c "import black, isort" 2>/dev/null || { echo "make format: black and isort are not installed for $$(python -V 2>&1) — run: pip install black isort"; exit 1; }
+
+format: check-format-tools add_file_path_comment
 	# pip install isort black pylint bandit mypy flake8 pytest coverage safety pre-commit types-requests pydocstyle radon
 	# pre-commit install
 
